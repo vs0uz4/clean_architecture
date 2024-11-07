@@ -15,7 +15,7 @@ require (
 	github.com/stretchr/testify v1.9.0
 	github.com/vektah/gqlparser/v2 v2.5.15
 	google.golang.org/grpc v1.50.1
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.33.0
 )
 
 require (
