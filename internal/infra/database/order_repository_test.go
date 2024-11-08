@@ -4,11 +4,9 @@ import (
 	"database/sql"
 	"testing"
 
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/suite"
 	"github.com/vs0uz4/clean_architecture/internal/entity"
-
-	// sqlite3
-	_ "github.com/mattn/go-sqlite3"
 )
 
 type OrderRepositoryTestSuite struct {
@@ -29,6 +27,35 @@ func (suite *OrderRepositoryTestSuite) TearDownTest() {
 
 func TestSuite(t *testing.T) {
 	suite.Run(t, new(OrderRepositoryTestSuite))
+}
+
+func (suite *OrderRepositoryTestSuite) TestGivenOrders_WhenList_ThenShouldReturnAllOrders() {
+	order1, err := entity.NewOrder("123", 10.0, 2.0)
+	suite.NoError(err)
+	suite.NoError(order1.CalculateFinalPrice())
+	order2, err := entity.NewOrder("456", 20.0, 4.0)
+	suite.NoError(err)
+	suite.NoError(order2.CalculateFinalPrice())
+
+	repo := NewOrderRepository(suite.Db)
+	err = repo.Save(order1)
+	suite.NoError(err)
+	err = repo.Save(order2)
+	suite.NoError(err)
+
+	orders, err := repo.List()
+	suite.NoError(err)
+	suite.Len(orders, 2)
+
+	suite.Equal(order1.ID, orders[1].ID)
+	suite.Equal(order1.Price, orders[1].Price)
+	suite.Equal(order1.Tax, orders[1].Tax)
+	suite.Equal(order1.FinalPrice, orders[1].FinalPrice)
+
+	suite.Equal(order2.ID, orders[0].ID)
+	suite.Equal(order2.Price, orders[0].Price)
+	suite.Equal(order2.Tax, orders[0].Tax)
+	suite.Equal(order2.FinalPrice, orders[0].FinalPrice)
 }
 
 func (suite *OrderRepositoryTestSuite) TestGivenAnOrder_WhenSave_ThenShouldSaveOrder() {
