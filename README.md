@@ -51,4 +51,14 @@ Starting GraphQL server on port 8080
 
 ### Informações dos Serviços
 
-WIP...
+**APIRestful - [Porta 8000]**
+GET /order  - Listagem de todas as `orders`
+POST /order - Criação de uma `order`
+
+**GraphQL - [Porta 8080]**
+Query
+    - orders: [Order!]!
+Mutation
+    - createOrder(input: OrderInput): Order
+
+WIP
