@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/vs0uz4/clean_architecture/internal/dto"
 	"github.com/vs0uz4/clean_architecture/internal/infra/grpc/pb"
 	"github.com/vs0uz4/clean_architecture/internal/usecase"
 )
@@ -19,7 +20,7 @@ func NewOrderService(createOrderUseCase usecase.CreateOrderUseCase) *OrderServic
 }
 
 func (s *OrderService) CreateOrder(ctx context.Context, in *pb.CreateOrderRequest) (*pb.CreateOrderResponse, error) {
-	dto := usecase.OrderInputDTO{
+	dto := dto.OrderInputDTO{
 		ID:    in.Id,
 		Price: float64(in.Price),
 		Tax:   float64(in.Tax),

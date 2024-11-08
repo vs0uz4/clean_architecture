@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/vs0uz4/clean_architecture/internal/dto"
 	"github.com/vs0uz4/clean_architecture/internal/entity"
 	"github.com/vs0uz4/clean_architecture/internal/usecase"
 	"github.com/vs0uz4/clean_architecture/pkg/events"
@@ -28,7 +29,7 @@ func NewWebOrderHandler(
 }
 
 func (h *WebOrderHandler) Create(w http.ResponseWriter, r *http.Request) {
-	var dto usecase.OrderInputDTO
+	var dto dto.OrderInputDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
