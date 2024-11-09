@@ -47,3 +47,10 @@ func TestGivenAPriceAndTax_WhenICallCalculatePrice_ThenIShouldSetFinalPrice(t *t
 	assert.Nil(t, order.CalculateFinalPrice())
 	assert.Equal(t, 12.0, order.FinalPrice)
 }
+
+func TestGivenAnOrder_WhenICallSetCreatedAt_ThenIShouldSetCreatedAt(t *testing.T) {
+	order, err := NewOrder("123", 10.0, 2.0)
+	assert.Nil(t, err)
+	order.SetCreatedAt()
+	assert.NotZero(t, order.CreatedAt)
+}
