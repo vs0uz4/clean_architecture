@@ -3,6 +3,7 @@ type Order {
     Price: Float!
     Tax: Float!
     FinalPrice: Float!
+    CreatedAt: String
 }
 
 input OrderInput {

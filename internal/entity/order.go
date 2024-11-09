@@ -1,12 +1,16 @@
 package entity
 
-import "errors"
+import (
+	"errors"
+	"time"
+)
 
 type Order struct {
 	ID         string
 	Price      float64
 	Tax        float64
 	FinalPrice float64
+	CreatedAt  time.Time
 }
 
 func NewOrder(id string, price float64, tax float64) (*Order, error) {
@@ -33,6 +37,10 @@ func (o *Order) IsValid() error {
 		return errors.New("invalid tax")
 	}
 	return nil
+}
+
+func (o *Order) SetCreatedAt() {
+	o.CreatedAt = time.Now()
 }
 
 func (o *Order) CalculateFinalPrice() error {

@@ -27,6 +27,7 @@ func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.OrderIn
 		Price:      float64(output.Price),
 		Tax:        float64(output.Tax),
 		FinalPrice: float64(output.FinalPrice),
+		CreatedAt:  &output.CreatedAt,
 	}, nil
 }
 
@@ -44,6 +45,7 @@ func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
 			Price:      float64(order.Price),
 			Tax:        float64(order.Tax),
 			FinalPrice: float64(order.FinalPrice),
+			CreatedAt:  &order.CreatedAt,
 		})
 	}
 	return result, nil

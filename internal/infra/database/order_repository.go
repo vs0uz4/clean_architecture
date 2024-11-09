@@ -29,7 +29,7 @@ func (r *OrderRepository) Save(order *entity.Order) error {
 func (r *OrderRepository) List() ([]entity.Order, error) {
 	var orders []entity.Order
 
-	rows, err := r.Db.Query("SELECT id, price, tax, final_price FROM orders ORDER BY id DESC")
+	rows, err := r.Db.Query("SELECT id, price, tax, final_price, created_at FROM orders ORDER BY created_at DESC")
 	if err != nil {
 		return nil, err
 	}
@@ -42,6 +42,7 @@ func (r *OrderRepository) List() ([]entity.Order, error) {
 			&order.Price,
 			&order.Tax,
 			&order.FinalPrice,
+			&order.CreatedAt,
 		)
 		if err != nil {
 			return nil, err

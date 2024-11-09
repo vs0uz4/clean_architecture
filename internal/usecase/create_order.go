@@ -30,6 +30,8 @@ func (c *CreateOrderUseCase) Execute(input dto.OrderInputDTO) (dto.OrderOutputDT
 		Price: input.Price,
 		Tax:   input.Tax,
 	}
+
+	order.SetCreatedAt()
 	order.CalculateFinalPrice()
 	if err := c.OrderRepository.Save(&order); err != nil {
 		return dto.OrderOutputDTO{}, err
@@ -40,6 +42,7 @@ func (c *CreateOrderUseCase) Execute(input dto.OrderInputDTO) (dto.OrderOutputDT
 		Price:      order.Price,
 		Tax:        order.Tax,
 		FinalPrice: order.Price + order.Tax,
+		CreatedAt:  order.CreatedAt.Format("2006-01-02 15:04:05 -07:00"),
 	}
 
 	c.OrderCreated.SetPayload(dto)

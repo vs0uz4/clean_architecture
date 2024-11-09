@@ -64,6 +64,7 @@ func (h *WebOrderHandler) List(w http.ResponseWriter, r *http.Request) {
 			Price:      order.Price,
 			Tax:        order.Tax,
 			FinalPrice: order.FinalPrice,
+			CreatedAt:  order.CreatedAt,
 		})
 	}
 	err = json.NewEncoder(w).Encode(orders)

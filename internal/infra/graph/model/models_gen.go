@@ -7,6 +7,7 @@ type Order struct {
 	Price      float64 `json:"Price"`
 	Tax        float64 `json:"Tax"`
 	FinalPrice float64 `json:"FinalPrice"`
+	CreatedAt  *string `json:"CreatedAt"`
 }
 
 type OrderInput struct {
