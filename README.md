@@ -23,6 +23,24 @@ Para a criação do banco de dados, devemos utilizar o Docker (Dockerfile|docker
 
 Criar documentação `README.md` descrevendo passo a passo como executar a aplicação e em quais portas cada serviço deverá responder.
 
+### Extras Adicionados
+
+Como o exercício não mencionava como deveríamos ordenar a listagem, decidi implementar as `orders` um campo `created_at` e modo a poder ordena-las pela data de criação das mesmas de forma descendente, assim acredito que a listagem ficaria melhor. Além disto foi criado um `Makefile` contendo os comando mais utilizados no projeto, encurtando os mesmos e tornando de certa forma as suas execuções mais ágeis. Abaixo as opções disponíveis no `Makefile`.
+
+```shell
+❯ make
+Opções disponíveis no Makefile:
+check_tools          Verifica se as ferramentas necessárias estão instaladas
+gen-graphql          Efetua a geração dos arquivos graphql
+gen-proto            Efetua a geração dos arquivos protobuffer
+help                 Exibe este menu de ajuda
+migration-down       Reverte as migrações aplicadas na base de dados
+migration-drop       Elimina as migrações aplicadas na base de dados
+migration-up         Aplica as migrações na base de dados
+run                  Inicializa o servidor da aplicação
+test                 Executa a suite de testes
+```
+
 ### Executando os Sistemas
 
 Para executar o sistema, devemos primeiramente provisionar a INFRA necessária, para isto precisamos rodar o seguinte comando abaixo:
@@ -36,14 +54,22 @@ Para executar o sistema, devemos primeiramente provisionar a INFRA necessária, 
 Após toda a INFRA necessária estar de pé, bastar rodarmos o projeto. Para isto, estando na pasta raiz do projeto, execute os seguintes comandos:
 
 ```shell
-❯ cd cmd/ordersystem
-❯ go run main.go wire_gen.go
+❯ make migration-up
+```
+
+> O comando acima irá implementar todas a migrações de banco de dados necessárias para podermos rodar a aplicação.
+
+E por fim após a INFRA estabelecida e a base dados normalizada, devemos executar o seguinte comando abaixo para subir a aplicação:
+
+```shell
+❯ make run
 ```
 
 Na janela do terminal, você deverá ver uma mensagem parecida com o exemplo abaixo:
 
 ```shell
-❯ go run main.go wire_gen.go
+❯ make run
+Running server
 Starting web server on port :8000
 Starting gRPC server on port 50051
 Starting GraphQL server on port 8080
@@ -67,4 +93,17 @@ Mutation
     - createOrder(input: OrderInput): Order
 ```
 
-WIP
+**gRPC - [Porta 50051]**
+
+```plaintext
+Services
+    - CreateOrder (input)
+        input(
+            id (TYPE_STRING)
+            price (TYPE_FLOAT)
+            tax (TYPE_FLOAT)
+        )
+    
+    - ListOrders(input)
+        - input (empty)
+```
