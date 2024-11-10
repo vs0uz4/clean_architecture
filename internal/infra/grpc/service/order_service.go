@@ -34,5 +34,6 @@ func (s *OrderService) CreateOrder(ctx context.Context, in *pb.CreateOrderReques
 		Price:      float32(output.Price),
 		Tax:        float32(output.Tax),
 		FinalPrice: float32(output.FinalPrice),
+		CreatedAt:  output.CreatedAt,
 	}, nil
 }
