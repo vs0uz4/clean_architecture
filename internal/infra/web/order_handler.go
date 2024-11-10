@@ -67,7 +67,16 @@ func (h *WebOrderHandler) List(w http.ResponseWriter, r *http.Request) {
 			CreatedAt:  order.CreatedAt,
 		})
 	}
-	err = json.NewEncoder(w).Encode(orders)
+
+	if len(orders) == 0 {
+		orders = []dto.OrderOutputDTO{}
+	}
+
+	response := dto.OrdersOutputDTO{
+		Orders: orders,
+	}
+
+	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
