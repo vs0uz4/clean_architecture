@@ -8,29 +8,6 @@ import (
 	"github.com/vs0uz4/clean_architecture/internal/entity"
 )
 
-type MockOrder struct {
-}
-
-type OrderRepositoryMock struct {
-	orders []entity.Order
-	err    error
-}
-
-func (r *OrderRepositoryMock) List() ([]entity.Order, error) {
-	if r.err != nil {
-		return nil, r.err
-	}
-	return r.orders, r.err
-}
-
-func (r *OrderRepositoryMock) Save(order *entity.Order) error {
-	if r.err != nil {
-		return r.err
-	}
-	r.orders = append(r.orders, *order)
-	return nil
-}
-
 func TestNewListOrderUseCase(t *testing.T) {
 	repository := &OrderRepositoryMock{}
 	useCase := NewListOrderUseCase(repository)
@@ -51,6 +28,8 @@ func TestListOrderUseCase_Execute(t *testing.T) {
 			},
 		}
 
+		repository.On("List").Return(repository.orders, nil)
+
 		useCase := NewListOrderUseCase(repository)
 		output, err := useCase.Execute()
 
@@ -60,6 +39,8 @@ func TestListOrderUseCase_Execute(t *testing.T) {
 		assert.Equal(t, 100.0, output[0].Price)
 		assert.Equal(t, 10.0, output[0].Tax)
 		assert.Equal(t, 110.0, output[0].FinalPrice)
+
+		repository.AssertExpectations(t)
 	})
 
 	t.Run("error", func(t *testing.T) {
@@ -67,11 +48,15 @@ func TestListOrderUseCase_Execute(t *testing.T) {
 			err: assert.AnError,
 		}
 
+		repository.On("List").Return(repository.orders, nil)
+
 		useCase := NewListOrderUseCase(repository)
 		output, err := useCase.Execute()
 
 		assert.Nil(t, output)
 		assert.Error(t, err)
+
+		repository.AssertExpectations(t)
 	})
 }
 
