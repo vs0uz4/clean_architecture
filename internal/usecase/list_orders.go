@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"time"
+
 	"github.com/vs0uz4/clean_architecture/internal/dto"
 	"github.com/vs0uz4/clean_architecture/internal/entity"
 )
@@ -31,10 +33,15 @@ func (c *ListOrderUseCase) Execute() ([]dto.OrderOutputDTO, error) {
 			Price:      order.Price,
 			Tax:        order.Tax,
 			FinalPrice: order.Price + order.Tax,
-			CreatedAt:  order.CreatedAt.Format("2006-01-02 15:04:05 -07:00"),
+			CreatedAt:  convertToTimezone(order.CreatedAt).Format("2006-01-02 15:04:05 -07:00"),
 		}
 		orders = append(orders, dto)
 	}
 
 	return orders, nil
+}
+
+func convertToTimezone(createdAt time.Time) time.Time {
+	location, _ := time.LoadLocation("America/Sao_Paulo")
+	return createdAt.In(location)
 }
