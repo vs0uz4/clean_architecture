@@ -16,7 +16,7 @@ GRAPHQL_PKG=github.com/99designs/gqlgen
 
 .DEFAULT_GOAL := help
 
-.PHONY: check_tools migrate-up migrate-down migrate-drop gen-proto gen-graphql server test
+.PHONY: check_tools migrate-up migrate-down migrate-drop gen-proto gen-graphql run test
 
 help:  ## Exibe este menu de ajuda
 	@echo "Opções disponíveis no Makefile:"
@@ -50,7 +50,7 @@ gen-graphql: check_tools ## Efetua a geração dos arquivos graphql
 	@echo "Generating graphql"
 	@go run $(GRAPHQL_PKG) generate 
 
-server: check_tools ## Inicializa o servidor da aplicação
+run: check_tools ## Inicializa o servidor da aplicação
 	@echo "Running server"
 	@cd cmd/ordersystem && go run main.go wire_gen.go
 
