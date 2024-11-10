@@ -25,9 +25,9 @@ Criar documentação `README.md` descrevendo passo a passo como executar a aplic
 
 ### Extras Adicionados
 
-Como o exercício não mencionava como deveríamos ordenar a listagem, decidi implementar as `orders` um campo `created_at` e modo a poder ordena-las pela data de criação das mesmas de forma descendente, assim acredito que a listagem ficaria melhor. Além disto foi criado um `Makefile` contendo os comando mais utilizados no projeto, encurtando os mesmos e tornando de certa forma as suas execuções mais ágeis. Abaixo as opções disponíveis no `Makefile`.
+Como o exercício não mencionava como deveríamos ordenar a listagem, decidi implementar a `order` um campo `created_at` e modo a poder ordena-las pela data de criação das mesmas de forma descendente, assim acredito que a listagem ficaria melhor. Além disto foi criado um `Makefile` contendo os comando mais utilizados no projeto, encurtando os mesmos e tornando de certa forma as suas execuções mais ágeis. Abaixo as opções disponíveis no `Makefile`.
 
-```shell
+```plaintext
 ❯ make
 Opções disponíveis no Makefile:
 check_tools          Verifica se as ferramentas necessárias estão instaladas
