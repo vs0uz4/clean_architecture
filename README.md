@@ -41,6 +41,16 @@ run                  Inicializa o servidor da aplicação
 test                 Executa a suite de testes
 ```
 
+Teste unitários adicionados ao projeto
+
+Cobertura de testes adiciona aos arquivos
+
+![arquivos com testes adicionados](docs/files_coverage.png)
+
+Algusn cenários de testes adicionados
+
+![cenários de testes adicionados](docs/unit_tests.png)
+
 ### Executando os Sistemas
 
 Para executar o sistema, devemos primeiramente provisionar a INFRA necessária, para isto precisamos rodar o seguinte comando abaixo:
