@@ -13,3 +13,7 @@ type OrderOutputDTO struct {
 	FinalPrice float64 `json:"final_price"`
 	CreatedAt  string  `json:"created_at"`
 }
+
+type OrdersOutputDTO struct {
+	Orders []OrderOutputDTO `json:"orders"`
+}
