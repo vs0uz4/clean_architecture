@@ -9,7 +9,7 @@ DB_PORT=3306
 DB_NAME=orders
 DB_URL=mysql://$(DB_USER):$(DB_PASSWORD)@tcp($(DB_HOST):$(DB_PORT))/$(DB_NAME)
 
-MIGRATE_CMD=migrate -path=sql/migrations -database "$(DB_URL)"
+MIGRATE_CMD=migrate -path=internal/infra/database/sql/migrations -database "$(DB_URL)"
 
 PROTOFILE_DIR=internal/infra/grpc/protofiles
 GRAPHQL_PKG=github.com/99designs/gqlgen
