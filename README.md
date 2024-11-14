@@ -41,48 +41,70 @@ run                  Inicializa o servidor da aplicação
 test                 Executa a suite de testes
 ```
 
-Teste unitários adicionados ao projeto
+Como o projeto princpial continha eventos, mantive os eventos para o fluxo de criação de `orders` e para isto adicionei a INFRA toda automação para criação da `queue` e `binding` necessário o funcionamento. O console para do RabbitMQ também está presente no projeto, sendo acessível utilizando os dados de acesso abaixo:
+
+```plaintext
+username: guest
+password: guest
+```
+
+> O console do RabbitMQ toda a aplicação estar provisionada estará disponível através do endereço `http://127.0.0.1:15672/`
+
+Aproveitei que o módulo de clean-architecture possuia alguns poucos testes unitários e ampliei a cobertura dos testes no projeto.
 
 Cobertura de testes adiciona aos arquivos
 
 ![arquivos com testes adicionados](docs/files_coverage.png)
 
-Algusn cenários de testes adicionados
+Alguns cenários de testes adicionados
 
 ![cenários de testes adicionados](docs/unit_tests.png)
 
 ### Executando os Sistemas
 
-Para executar o sistema, devemos primeiramente provisionar a INFRA necessária, para isto precisamos rodar o seguinte comando abaixo:
+Existem duas formas de executarmos os sistemas, ambas executando o mesmo comando, uma mantendo o terminal preso, onde veremos os `logs` em tempo real, ideal para depuração e outra em segundo plano, ou o terminal fica livre e os `logs` só podem ser vistos através do comando `docker-compose logs <container-id>` ou `docker-compose logs`.
+
+Ao executar o os comandos apresentadoa a seguir, no ato da inicialização do projeto, em ambos os casos toda a INFRA será provisionada antes do sistema ser inicializado.
+
+#### Modo Depuração
+
+Para executar o sistema, basta executarmos o seguinte comando abaixo:
 
 ```shell
 ❯ docker-compose up
 ```
 
-> O comando acima deve ser executado a partir da pasta raiz do projeto, onde encontramos o arquivo `docker-compose.yaml`
-
-Após toda a INFRA necessária estar de pé, bastar rodarmos o projeto. Para isto, estando na pasta raiz do projeto, execute os seguintes comandos:
+Na janela do terminal, você deverá ver uma mensagem parecida com o exemplo abaixo:
 
 ```shell
-❯ make migration-up
+rabbitmq   | wait-for-it.sh: rabbitmq:5672 is available after 4 seconds
+rabbitmq   | RabbitMQ está disponível.
+rabbitmq   | Importing definitions in JSON from a file at "/etc/rabbitmq/definitions.json" ...
+rabbitmq   | Successfully started definition import. This process is asynchronous and can take some time. Watch target node logs for completion.
+app        | Starting web server on port :8000
+app        | Starting gRPC server on port 50051
+app        | Starting GraphQL server on port 8080
+migrate-1  | no change
+migrate-1 exited with code 0
 ```
 
-> O comando acima irá implementar todas a migrações de banco de dados necessárias para podermos rodar a aplicação.
+#### Modo Segundo Plano
 
-E por fim após a INFRA estabelecida e a base dados normalizada, devemos executar o seguinte comando abaixo para subir a aplicação:
+Para executar o sistema, basta executarmos o seguinte comando abaixo:
 
 ```shell
-❯ make run
+❯ docker-compose up -d
 ```
 
 Na janela do terminal, você deverá ver uma mensagem parecida com o exemplo abaixo:
 
 ```shell
-❯ make run
-Running server
-Starting web server on port :8000
-Starting gRPC server on port 50051
-Starting GraphQL server on port 8080
+❯ docker compose up -d
+[+] Running 4/4
+ ✔ Container rabbitmq     Healthy       0.5s 
+ ✔ Container mysql        Healthy       0.5s 
+ ✔ Container app          Running       0.0s 
+ ✔ Container clean_architecture-migrate-1  Started   
 ```
 
 ### Informações dos Serviços
