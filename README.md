@@ -68,6 +68,8 @@ Ao executar o os comandos apresentadoa a seguir, no ato da inicialização do pr
 
 #### Modo Depuração
 
+* Inicializando os serviços...
+
 Para executar o sistema, basta executarmos o seguinte comando abaixo:
 
 ```shell
@@ -88,7 +90,22 @@ migrate-1  | no change
 migrate-1 exited with code 0
 ```
 
+* Encerrando os serviços
+
+Para encerrar os serviços, estando no modo de execução atachado, bastar que pressionemos `Ctrl+C` e o processo de encerramento dos containers se iniciará imediatamente, ao fim do processo você deverá ver em sua janela de terminal algo parecido com o exemplo abaixo:
+
+```shell
+^CGracefully stopping... (press Ctrl+C again to force)
+[+] Stopping 4/4
+ ✔ Container clean_architecture-migrate-1  Stopped   0.0s 
+ ✔ Container app                           Stopped   0.1s 
+ ✔ Container rabbitmq                      Stopped   10.1s 
+ ✔ Container mysql                         Stopped   0.8s
+```
+
 #### Modo Segundo Plano
+
+* Inicializando os serviços
 
 Para executar o sistema, basta executarmos o seguinte comando abaixo:
 
@@ -100,11 +117,32 @@ Na janela do terminal, você deverá ver uma mensagem parecida com o exemplo aba
 
 ```shell
 ❯ docker compose up -d
-[+] Running 4/4
- ✔ Container rabbitmq     Healthy       0.5s 
- ✔ Container mysql        Healthy       0.5s 
- ✔ Container app          Running       0.0s 
- ✔ Container clean_architecture-migrate-1  Started   
+[+] Running 6/6
+ ✔ Network clean_architecture_default         Created   0.1s 
+ ✔ Container rabbitmq                         Healthy   5.7s 
+ ✔ Container mysql                            Healthy   5.7s 
+ ✔ Container clean_architecture-migrate-1     Started   5.8s 
+ ✔ Container app                              Started   5.8s 
+```
+
+* Encerrando os serviços
+
+Já no modo de execução em segundo plano para finalizarmos os containers que estão rodando fazendo assim com que os serviços sejam encerrados, basta que executemos o seguinte comando:
+
+```shell
+❯ docker compose down
+```
+
+Na janela do terminal, você deverá ver uma mensagem parecida com o exemplo abaixo:
+
+```shell
+❯ docker compose down
+[+] Running 5/5
+ ✔ Container clean_architecture-migrate-1  Removed   0.0s 
+ ✔ Container app                           Removed   0.1s 
+ ✔ Container rabbitmq                      Removed   10.2s 
+ ✔ Container mysql                         Removed   0.8s 
+ ✔ Network clean_architecture_default      Removed   0.1s 
 ```
 
 ### Informações dos Serviços
